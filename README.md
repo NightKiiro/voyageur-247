@@ -56,7 +56,7 @@ tisse avec les personnages, et la manière dont il traite ses sauvegardes.
 | [CHARACTERS.md](docs/CHARACTERS.md) | Les personnages et leurs réactions aux actions méta |
 | GDD.md *(à venir)* | Game design : boucle de jeu, combats, exploration |
 | MEMORY_SYSTEM.md *(à venir)* | Catalogue des souvenirs et conception technique de la mémoire |
-| STRUCTURE.md *(à venir)* | Zones, progression, embranchements et fins |
+| [STRUCTURE.md](docs/STRUCTURE.md) | Zones, progression, embranchements et fins |
 | ROADMAP.md *(à venir)* | Étapes de développement |
 
 ## Principes de conception
