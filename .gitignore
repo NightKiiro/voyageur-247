@@ -1,0 +1,22 @@
+# Cache et imports générés par Godot
+.godot/
+
+# Exports et builds
+/export/
+/builds/
+*.x86_64
+*.exe
+*.pck
+*.zip
+
+# Préréglages d'export (peuvent contenir des chemins locaux)
+export_presets.cfg
+
+# Fichiers d'IDE
+.vscode/
+.idea/
+
+# Système
+.DS_Store
+Thumbs.db
+*~
