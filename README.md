@@ -54,10 +54,10 @@ tisse avec les personnages, et la manière dont il traite ses sauvegardes.
 |---|---|
 | [LORE.md](docs/LORE.md) | L'univers, la vérité cachée, le numéro du Voyageur |
 | [CHARACTERS.md](docs/CHARACTERS.md) | Les personnages et leurs réactions aux actions méta |
-| GDD.md *(à venir)* | Game design : boucle de jeu, combats, exploration |
-| MEMORY_SYSTEM.md *(à venir)* | Catalogue des souvenirs et conception technique de la mémoire |
+| [GDD.md](docs/GDD.md) | Game design : boucle de jeu, combats, exploration, dialogues |
+| [MEMORY_SYSTEM.md](docs/MEMORY_SYSTEM.md) | Catalogue des souvenirs et conception technique de la mémoire |
 | [STRUCTURE.md](docs/STRUCTURE.md) | Zones, progression, embranchements et fins |
-| ROADMAP.md *(à venir)* | Étapes de développement |
+| [ROADMAP.md](docs/ROADMAP.md) | Étapes de développement et conventions |
 
 ## Principes de conception
 
