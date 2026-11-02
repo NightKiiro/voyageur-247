@@ -35,10 +35,13 @@ user://
 
 | Système | Chemin réel de `user://` |
 |---|---|
-| Linux | `~/.local/share/godot/app_userdata/voyageur-247/` |
-| Windows | `%APPDATA%\Godot\app_userdata\voyageur-247\` |
-| macOS | `~/Library/Application Support/Godot/app_userdata/voyageur-247/` |
+| Linux | `~/.local/share/voyageur-247/` |
+| Windows | `%APPDATA%\voyageur-247\` |
+| macOS | `~/Library/Application Support/voyageur-247/` |
 | Web | Stockage du navigateur (IndexedDB) |
+
+Le nom du dossier est fixé par le réglage `application/config/custom_user_dir_name`, indépendamment du titre du jeu :
+changer le titre ne fera jamais perdre leurs données aux joueurs.
 
 **Conformément aux principes du README**, le jeu ne lit et n'écrit **rien** en dehors de ce dossier.
 
@@ -361,7 +364,8 @@ La démo web se concentre donc sur le prologue et l'acte 1, avec les réactions 
 | 3 | Sauvegarder, avancer, charger la sauvegarde | Souvenir `RECHARGEMENT`, manipulation +1 |
 | 4 | Perdre un combat, charger | `RECHARGEMENT` + `RECHARGEMENT_APRES_DEFAITE`, manipulation +2 |
 | 5 | Faire un choix, recharger, choisir autre chose | Souvenir `CHOIX_REFAIT`, `choix_connus` garde le premier choix |
-| 6 | Fermer la fenêtre pendant un combat | Au lancement suivant, aucun nouveau souvenir (déjà enregistré à la fermeture) et `FUITE_EN_COMBAT` présent |
+| 6 | Fermer la fenêtre pendant un combat | Au lancement suivant, aucun nouveau souvenir (dé
+à enregistré à la fermeture) et `FUITE_EN_COMBAT` présent |
 | 7 | Tuer le processus pendant un combat (`kill -9`) | Au lancement suivant, souvenir `FUITE_EN_COMBAT` |
 | 8 | Nouvelle partie sans fin vue | Numéro +1, manipulation +3 |
 | 9 | Nouvelle partie après une fin | Numéro +1, manipulation +1 |
