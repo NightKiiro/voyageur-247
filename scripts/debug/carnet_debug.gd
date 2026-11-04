@@ -41,6 +41,7 @@ func _ready() -> void:
 	_ajouter_bouton(boutons, "Choix B", GameState.faire_choix.bind("test_choix", "B"))
 	_ajouter_bouton(boutons, "Debut combat", Carnet.debut_combat.bind("test_combat"))
 	_ajouter_bouton(boutons, "Combat epargne", GameState.terminer_combat.bind(true))
+	_ajouter_bouton(boutons, "Combat vaincu (creature)", GameState.terminer_combat.bind(false))
 	_ajouter_bouton(boutons, "Combat vaincu (boss)", GameState.terminer_combat.bind(false, "gardien_puits"))
 	_ajouter_bouton(boutons, "Defaite", Carnet.defaite)
 	_ajouter_bouton(boutons, "Fin vue", Carnet.enregistrer_fin.bind("au_revoir"))
