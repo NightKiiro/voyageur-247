@@ -37,9 +37,9 @@ nourrit le Carnet de Lumi, qui modifie à son tour les dialogues, les indices di
 
 ### Déplacement
 
-- Déplacement en 8 directions, vitesse constante
-- Pas de saut, pas de course (le rythme est calme et narratif)
-- Collisions simples avec le décor
+- Déplacement en 8 directions, y compris au stick (la direction est arrondie à la plus proche)
+- Vitesse de 60 pixels par seconde, soit 1 pixel par image : un mouvement net en pixel art
+- En diagonale, chaque axe avance à pleine vitesse (1 pixel par image, comme dans Undertale) : un mouvement net, avec une diagonale un peu plus rapide
 
 ### Interactions
 
@@ -170,11 +170,12 @@ Chaque choix passe par `Carnet.enregistrer_choix()`, ce qui permet de détecter 
 |---|---|---|
 | Se déplacer | Flèches ou ZQSD | Stick gauche, croix |
 | Interagir, valider | Entrée ou E | A / Croix |
-| Annuler, retour | Échap ou A | B / Rond |
+| Annuler, retour | Échap ou Retour arrière | B / Rond |
 | Menu | Tab | Start |
 | Accélérer le texte | Maintenir valider | Maintenir A |
 
 Toutes les touches sont configurables dans les options.
+Le déplacement utilise la **position physique** des touches : ZQSD sur un clavier AZERTY, WASD sur un clavier QWERTY.
 
 ## 8. Interface
 

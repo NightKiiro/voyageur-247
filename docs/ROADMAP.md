@@ -10,16 +10,16 @@
 - [x] Système de mémoire
 - [x] GDD et roadmap
 
-## Phase 1 — Fondations techniques
+## Phase 1 — Fondations techniques ✅
 
 Objectif : la mémoire du jeu fonctionne, avant même d'avoir un seul sprite.
 
-- [ ] Arborescence du projet (voir plus bas)
-- [ ] Réglages du projet : résolution 320 × 180, mise à l'échelle, filtre pixel art
-- [ ] Autoload `Carnet` : lecture, écriture sûre, souvenirs, session, empreinte
-- [ ] Autoload `GameState` : axes, compteur de progression, inventaire
-- [ ] Autoload `SaveManager` : 3 emplacements, sauvegarde, chargement, nouvelle partie
-- [ ] Écran de débogage affichant le contenu du Carnet en direct (touche F3)
+- [x] Arborescence du projet (voir plus bas)
+- [x] Réglages du projet : résolution 320 × 180, mise à l'échelle, filtre pixel art
+- [x] Autoload `Carnet` : lecture, écriture sûre, souvenirs, session, empreinte
+- [x] Autoload `GameState` : axes, compteur de progression, inventaire
+- [x] Autoload `SaveManager` : 3 emplacements, sauvegarde, chargement, nouvelle partie
+- [x] Scène de débogage du Carnet et des sauvegardes
 
 **Terminé quand :** les 13 scénarios de test de `MEMORY_SYSTEM.md` passent, avec de simples boutons à la place du jeu.
 
@@ -27,12 +27,14 @@ Objectif : la mémoire du jeu fonctionne, avant même d'avoir un seul sprite.
 
 Objectif : se déplacer et parler, avec des carrés de couleur à la place des graphismes.
 
+- [ ] Actions de contrôle (clavier et manette)
 - [ ] Personnage jouable et déplacement 8 directions
 - [ ] Une scène de test avec collisions
 - [ ] Système d'interaction
 - [ ] Système de dialogues (JSON, conditions, choix)
 - [ ] Une halte fonctionnelle
 - [ ] Transitions entre scènes
+- [ ] Écran de débogage F3 par-dessus le jeu (contenu du Carnet en direct)
 
 **Terminé quand :** on peut parler à Lumi, faire un choix, sauvegarder à une halte, recharger,
 refaire le choix, et Lumi le remarque.
