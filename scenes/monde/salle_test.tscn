@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cd7jghjcc07op"]
+
+[ext_resource type="Script" uid="uid://bxgihym24wwkn" path="res://scripts/monde/salle_test.gd" id="1_dgf2x"]
+
+[node name="SalleTest" type="Node2D" unique_id=1794793215]
+script = ExtResource("1_dgf2x")

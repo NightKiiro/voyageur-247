@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://251yd07o0m6g"]
+
+[ext_resource type="Script" uid="uid://6rrt2tcr40bs" path="res://scripts/monde/voyageur.gd" id="1_kmxtq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ldl8w"]
+size = Vector2(10, 6)
+
+[node name="Voyageur" type="CharacterBody2D" unique_id=174100206]
+motion_mode = 1
+script = ExtResource("1_kmxtq")
+
+[node name="Apparence" type="ColorRect" parent="." unique_id=2032766038]
+offset_left = -6.0
+offset_top = -16.0
+offset_right = 6.0
+color = Color(0.8509804, 0.78039217, 0.6392157, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1232321656]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_ldl8w")
