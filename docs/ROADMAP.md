@@ -27,10 +27,10 @@ Objectif : la mémoire du jeu fonctionne, avant même d'avoir un seul sprite.
 
 Objectif : se déplacer et parler, avec des carrés de couleur à la place des graphismes.
 
-- [ ] Actions de contrôle (clavier et manette)
-- [ ] Personnage jouable et déplacement 8 directions
-- [ ] Une scène de test avec collisions
-- [ ] Système d'interaction
+- [x] Actions de contrôle (clavier et manette)
+- [x] Personnage jouable et déplacement 8 directions
+- [x] Une scène de test avec collisions
+- [x] Système d'interaction
 - [ ] Système de dialogues (JSON, conditions, choix)
 - [ ] Une halte fonctionnelle
 - [ ] Transitions entre scènes

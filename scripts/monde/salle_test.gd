@@ -5,7 +5,11 @@ const TAILLE := Vector2(320, 180)
 const EPAISSEUR_MUR := 8.0
 const COULEUR_SOL := Color("#3b4a3f")
 const COULEUR_MUR := Color("#8a9a7b")
+const COULEUR_PANNEAU := Color("#9c6b3f")
+const COULEUR_PIERRE := Color("#6f7a86")
 const POSITION_DEPART := Vector2(60, 60)
+## Marge autour d'un objet dans laquelle on peut interagir avec lui.
+const MARGE_INTERACTION := 4.0
 
 const SCENE_VOYAGEUR := preload("res://scenes/personnages/voyageur.tscn")
 
@@ -23,6 +27,10 @@ func _ready() -> void:
 	_creer_mur(Rect2(140, 70, 40, 24))
 	_creer_mur(Rect2(60, 120, 16, 16))
 
+	# Objets pour tester les interactions
+	_creer_objet(Rect2(250, 40, 12, 10), COULEUR_PANNEAU, "Panneau : « Bienvenue à Brindille ! »")
+	_creer_objet(Rect2(230, 130, 14, 10), COULEUR_PIERRE, "Une pierre couverte de mousse. Elle a l'air d'attendre quelqu'un.")
+
 	var voyageur := SCENE_VOYAGEUR.instantiate()
 	voyageur.position = POSITION_DEPART
 	add_child(voyageur)
@@ -38,7 +46,7 @@ func _creer_rectangle(zone: Rect2, couleur: Color) -> void:
 
 
 ## Un mur = un rectangle visible + un corps statique qui bloque le joueur.
-func _creer_mur(zone: Rect2) -> void:
+func _creer_mur(zone: Rect2, couleur: Color = COULEUR_MUR) -> void:
 	var forme := RectangleShape2D.new()
 	forme.size = zone.size
 
@@ -50,4 +58,21 @@ func _creer_mur(zone: Rect2) -> void:
 	corps.add_child(collision)
 	add_child(corps)
 
-	_creer_rectangle(zone, COULEUR_MUR)
+	_creer_rectangle(zone, couleur)
+
+
+## Un objet = un mur avec lequel on peut aussi interagir.
+func _creer_objet(zone: Rect2, couleur: Color, texte: String) -> void:
+	_creer_mur(zone, couleur)
+
+	var forme := RectangleShape2D.new()
+	forme.size = zone.size + Vector2.ONE * MARGE_INTERACTION * 2
+
+	var collision := CollisionShape2D.new()
+	collision.shape = forme
+
+	var interactable := Interactable.new()
+	interactable.texte_test = texte
+	interactable.position = zone.get_center()
+	interactable.add_child(collision)
+	add_child(interactable)
