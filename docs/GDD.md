@@ -43,7 +43,8 @@ nourrit le Carnet de Lumi, qui modifie à son tour les dialogues, les indices di
 
 ### Interactions
 
-- Touche d'action devant un PNJ, un objet ou un élément du décor
+- Touche d'action devant un PNJ, un objet ou un élément du décor : le Voyageur interagit avec ce qui se trouve
+  juste devant ses pieds, dans la direction où il regarde (le plus proche s'il y en a plusieurs)
 - Les éléments interactifs ont un léger scintillement (sauf les indices cachés)
 
 ### Haltes (points de sauvegarde)
