@@ -23,6 +23,7 @@ const POINTS_MANIPULATION := {
 	"RECHARGEMENT_APRES_DEFAITE": 1,
 	"CHOIX_REFAIT": 2,
 	"FUITE_EN_COMBAT": 2,
+	"RETOUR_ANCIEN_VOYAGEUR": 1,
 }
 const POINTS_NOUVELLE_PARTIE := 3
 const POINTS_NOUVELLE_PARTIE_APRES_FIN := 1
@@ -105,9 +106,13 @@ func mettre_a_jour_progression(progression: int) -> void:
 
 
 ## À appeler au chargement d'une sauvegarde. Détecte les retours en arrière.
-func verifier_chargement(progression_sauvegarde: int) -> void:
+func verifier_chargement(progression_sauvegarde: int, numero_sauvegarde: int = -1) -> void:
 	var actuelle := get_progression()
-	if progression_sauvegarde < actuelle:
+	if numero_sauvegarde != -1 and numero_sauvegarde != get_numero():
+		# Partie d'un ancien Voyageur : les progressions ne sont pas comparables.
+		# Le numéro, lui, ne redescend jamais.
+		_ajouter_souvenir("RETOUR_ANCIEN_VOYAGEUR", {"numero_sauvegarde": numero_sauvegarde})
+	elif progression_sauvegarde < actuelle:
 		var apres_defaite: bool = dernier_souvenir().get("type", "") == "DEFAITE"
 		_ajouter_souvenir("RECHARGEMENT", {
 			"progression": progression_sauvegarde,
