@@ -22,6 +22,8 @@ config/icon="res://icon.svg"
 Carnet="*uid://b7o1m1gldtr6l"
 GameState="*uid://c6eqwn55ej6sx"
 SaveManager="*uid://d5865ol234ta"
+Dialogues="*uid://m4g78j3d2r8y"
+BoiteDialogue="*uid://sshvusoagwl3"
 
 [display]
 

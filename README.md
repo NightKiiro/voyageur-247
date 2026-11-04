@@ -68,6 +68,10 @@ Le jeu joue avec l'idée qu'il « sait » des choses sur le joueur, mais il resp
 - Le jeu ne lit **aucune** donnée personnelle en dehors de ses propres fichiers
 - Les effets de peur restent dans la fiction
 
+## Crédits
+
+- Police : [Pixel Operator](https://www.dafont.com/pixel-operator.font), par Jayvee Enaguas (CC0)
+
 ## Licence
 
 À définir.

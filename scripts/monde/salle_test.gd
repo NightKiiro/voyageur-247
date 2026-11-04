@@ -7,6 +7,7 @@ const COULEUR_SOL := Color("#3b4a3f")
 const COULEUR_MUR := Color("#8a9a7b")
 const COULEUR_PANNEAU := Color("#9c6b3f")
 const COULEUR_PIERRE := Color("#6f7a86")
+const COULEUR_LUMI := Color("#f2d16b")
 const POSITION_DEPART := Vector2(60, 60)
 ## Marge autour d'un objet dans laquelle on peut interagir avec lui.
 const MARGE_INTERACTION := 4.0
@@ -27,9 +28,10 @@ func _ready() -> void:
 	_creer_mur(Rect2(140, 70, 40, 24))
 	_creer_mur(Rect2(60, 120, 16, 16))
 
-	# Objets pour tester les interactions
-	_creer_objet(Rect2(250, 40, 12, 10), COULEUR_PANNEAU, "Panneau : « Bienvenue à Brindille ! »")
-	_creer_objet(Rect2(230, 130, 14, 10), COULEUR_PIERRE, "Une pierre couverte de mousse. Elle a l'air d'attendre quelqu'un.")
+	# Objets et personnages pour tester les interactions et les dialogues
+	_creer_objet(Rect2(250, 40, 12, 10), COULEUR_PANNEAU, "panneau_brindille")
+	_creer_objet(Rect2(230, 130, 14, 10), COULEUR_PIERRE, "pierre_mousse")
+	_creer_objet(Rect2(104, 36, 8, 8), COULEUR_LUMI, "lumi_salut")
 
 	var voyageur := SCENE_VOYAGEUR.instantiate()
 	voyageur.position = POSITION_DEPART
@@ -61,8 +63,8 @@ func _creer_mur(zone: Rect2, couleur: Color = COULEUR_MUR) -> void:
 	_creer_rectangle(zone, couleur)
 
 
-## Un objet = un mur avec lequel on peut aussi interagir.
-func _creer_objet(zone: Rect2, couleur: Color, texte: String) -> void:
+## Un objet = un mur avec lequel on peut aussi interagir (il lance un dialogue).
+func _creer_objet(zone: Rect2, couleur: Color, dialogue_id: String) -> void:
 	_creer_mur(zone, couleur)
 
 	var forme := RectangleShape2D.new()
@@ -72,7 +74,7 @@ func _creer_objet(zone: Rect2, couleur: Color, texte: String) -> void:
 	collision.shape = forme
 
 	var interactable := Interactable.new()
-	interactable.texte_test = texte
+	interactable.dialogue_id = dialogue_id
 	interactable.position = zone.get_center()
 	interactable.add_child(collision)
 	add_child(interactable)

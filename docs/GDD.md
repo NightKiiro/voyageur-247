@@ -118,52 +118,69 @@ puis retour au menu de chargement.
 ### Format
 
 Les dialogues sont écrits dans des fichiers JSON dans `data/dialogues/`, séparés du code.
-Chaque réplique peut avoir des **conditions** qui interrogent le Carnet ou l'état de la partie.
+Un dialogue contient plusieurs **variantes**. Le jeu joue **la première variante dont la condition est remplie** ;
+une variante sans condition sert de réponse par défaut et se place en dernier.
+
+Une variante contient des **lignes**, puis éventuellement un **choix** ou une **suite** (un autre dialogue à enchaîner).
+`{numero}` est remplacé par le numéro actuel du Voyageur.
 
 ```json
 {
-  "id": "lumi_halte_puits",
-  "repliques": [
-    {
-      "perso": "lumi",
-      "humeur": "inquiete",
-      "texte": "Tu reviens toujours ici, hein…",
-      "condition": { "souvenir_min": { "type": "RECHARGEMENT", "nombre": 3 } }
-    },
-    {
-      "perso": "lumi",
-      "humeur": "joyeuse",
-      "texte": "Une petite pause ? Bonne idée !"
-    }
-  ]
-}
-```
-
-La première réplique dont la condition est remplie est affichée.
-Une réplique sans condition sert de réplique par défaut.
-
-### Choix
-
-```json
-{
-  "id": "cardon_apres_entrainement",
-  "choix": {
-    "choix_id": "cardon_entrainement",
-    "options": [
-      { "id": "ridiculiser", "texte": "« C'était facile. »", "effets": { "lien_cardon": -1 } },
-      { "id": "encourager", "texte": "« Tu t'es bien battu. »", "effets": { "lien_cardon": 2 } }
+  "lumi_halte": {
+    "variantes": [
+      {
+        "condition": { "souvenir_min": { "type": "RECHARGEMENT", "nombre": 3 } },
+        "lignes": [
+          { "perso": "lumi", "humeur": "inquiete", "texte": "Tu reviens toujours ici, hein..." }
+        ]
+      },
+      {
+        "lignes": [
+          { "perso": "lumi", "humeur": "joyeuse", "texte": "Une petite pause ? Bonne idée !" }
+        ]
+      }
     ]
   }
 }
 ```
 
-Chaque choix passe par `Carnet.enregistrer_choix()`, ce qui permet de détecter les choix refaits.
+### Conditions
+
+Une condition peut combiner plusieurs clés : elles doivent toutes être vraies.
+
+| Clé | Exemple | Vraie si |
+|---|---|---|
+| `souvenir_min` | `{ "type": "RECHARGEMENT", "nombre": 3 }` | Le Carnet contient au moins ce nombre de souvenirs de ce type |
+| `choix_refait` | `"lumi_mousse"` | Le joueur vient de refaire ce choix autrement qu'à la première fois |
+| `choix_fait` / `choix_pas_fait` | `"lumi_mousse"` | Ce choix a (ou n'a pas) été fait dans la partie en cours |
+| `choix_partie` | `{ "choix_id": "lumi_mousse", "option": "oui" }` | Ce choix a reçu cette réponse dans la partie en cours |
+| `manipulation_min` | `"moyen"` | Le niveau de manipulation est au moins celui-ci |
+| `numero_min` | `248` | Le numéro du Voyageur est au moins celui-ci |
+| `lien_min` | `{ "perso": "lumi", "valeur": 5 }` | Le lien avec ce personnage est au moins celui-ci |
+| `palier_violence` | `"forte"` | Le palier de violence est celui-ci |
+| `boss_rencontre` | `"gardien_puits"` | Ce boss a déjà été rencontré, toutes parties confondues |
+
+### Choix
+
+```json
+"choix": {
+  "choix_id": "lumi_mousse",
+  "options": [
+    { "id": "oui", "texte": "Oui, beaucoup !", "effets": { "lien_lumi": 1 }, "suite": "lumi_reponse_oui" },
+    { "id": "non", "texte": "Pas vraiment.", "suite": "lumi_reponse_non" }
+  ]
+}
+```
+
+Chaque choix passe par `GameState.faire_choix()`, donc par le Carnet, ce qui permet de détecter les choix refaits.
+Les effets possibles sont pour l'instant les liens (`lien_lumi`, `lien_ortie`, `lien_cardon`, `lien_mirette`).
 
 ### Affichage
 
 - Boîte de dialogue en bas de l'écran, portrait du personnage à gauche
 - Texte qui s'affiche lettre par lettre, avec un son par personnage
-- Le portrait de Lumi change selon son humeur (couleur de sa lumière)
+- Le portrait de Lumi est sa lumière, dont la couleur change selon son humeur
+- Police pixel : Pixel Operator 8 (CC0)
 
 ## 7. Contrôles
 

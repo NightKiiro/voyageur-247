@@ -31,7 +31,7 @@ Objectif : se déplacer et parler, avec des carrés de couleur à la place des g
 - [x] Personnage jouable et déplacement 8 directions
 - [x] Une scène de test avec collisions
 - [x] Système d'interaction
-- [ ] Système de dialogues (JSON, conditions, choix)
+- [x] Système de dialogues (JSON, conditions, choix)
 - [ ] Une halte fonctionnelle
 - [ ] Transitions entre scènes
 - [ ] Écran de débogage F3 par-dessus le jeu (contenu du Carnet en direct)

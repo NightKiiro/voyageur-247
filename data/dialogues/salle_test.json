@@ -1,0 +1,86 @@
+{
+	"panneau_brindille": {
+		"variantes": [
+			{
+				"lignes": [
+					{ "perso": "narrateur", "texte": "« Bienvenue à Brindille ! »" }
+				]
+			}
+		]
+	},
+	"pierre_mousse": {
+		"variantes": [
+			{
+				"condition": { "souvenir_min": { "type": "CHOIX_REFAIT", "nombre": 1 } },
+				"lignes": [
+					{ "perso": "narrateur", "texte": "La mousse frémit, comme si elle avait entendu quelque chose." }
+				]
+			},
+			{
+				"lignes": [
+					{ "perso": "narrateur", "texte": "Une pierre couverte de mousse. Elle a l'air d'attendre quelqu'un." }
+				]
+			}
+		]
+	},
+	"lumi_salut": {
+		"variantes": [
+			{
+				"condition": { "choix_fait": "lumi_mousse" },
+				"lignes": [
+					{ "perso": "lumi", "humeur": "joyeuse", "texte": "On reprend la route, Voyageur n°{numero} ?" }
+				]
+			},
+			{
+				"lignes": [
+					{ "perso": "lumi", "humeur": "joyeuse", "texte": "Bienvenue, Voyageur n°{numero} ! Moi, c'est Lumi." },
+					{ "perso": "lumi", "humeur": "joyeuse", "texte": "Dis-moi... tu aimes la mousse ?" }
+				],
+				"choix": {
+					"choix_id": "lumi_mousse",
+					"options": [
+						{ "id": "oui", "texte": "Oui, beaucoup !", "effets": { "lien_lumi": 1 }, "suite": "lumi_reponse_oui" },
+						{ "id": "non", "texte": "Pas vraiment.", "suite": "lumi_reponse_non" }
+					]
+				}
+			}
+		]
+	},
+	"lumi_reponse_oui": {
+		"variantes": [
+			{
+				"condition": { "choix_refait": "lumi_mousse" },
+				"suite": "lumi_choix_change"
+			},
+			{
+				"lignes": [
+					{ "perso": "lumi", "humeur": "joyeuse", "texte": "Moi aussi ! C'est doux, et ça sent la pluie." }
+				]
+			}
+		]
+	},
+	"lumi_reponse_non": {
+		"variantes": [
+			{
+				"condition": { "choix_refait": "lumi_mousse" },
+				"suite": "lumi_choix_change"
+			},
+			{
+				"lignes": [
+					{ "perso": "lumi", "humeur": "joyeuse", "texte": "Oh. Tant pis, je l'aimerai pour deux !" }
+				]
+			}
+		]
+	},
+	"lumi_choix_change": {
+		"variantes": [
+			{
+				"lignes": [
+					{ "perso": "lumi", "humeur": "inquiete", "texte": "..." },
+					{ "perso": "lumi", "humeur": "inquiete", "texte": "Tu avais répondu autre chose, la première fois." },
+					{ "perso": "lumi", "humeur": "triste", "texte": "Pourquoi tu as changé ?" }
+				]
+			}
+		]
+	}
+}
