@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Carnet="*uid://b7o1m1gldtr6l"
+GameState="*uid://c6eqwn55ej6sx"
+SaveManager="*uid://d5865ol234ta"
 
 [display]
 

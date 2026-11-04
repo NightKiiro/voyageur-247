@@ -55,7 +55,7 @@ Chaque action méta détectée devient un **souvenir** enregistré dans le Carne
 | `NOUVELLE_PARTIE` | Le joueur commence une nouvelle partie | Menu « Nouvelle partie » | +3, ou +1 si une fin a été vue avec le numéro actuel |
 | `SAUVEGARDE` | Le joueur sauvegarde | Appel à la sauvegarde | 0 |
 | `RECHARGEMENT` | Le joueur charge une sauvegarde **antérieure** à sa progression | Comparaison des compteurs (voir 5.1) | +1 |
-| `RECHARGEMENT_APRES_DEFAITE` | Rechargement juste après un game over | Dernier souvenir = `DEFAITE` | +1 (en plus) |
+| `RETOUR_ANCIEN_VOYAGEUR` | Le joueur charge une sauvegarde d'un ancien numéro | Numéro de la sauvegarde ≠ numéro actuel | +1 |
 | `CHOIX_REFAIT` | Le joueur refait un choix de dialogue différemment | Comparaison avec les choix connus (voir 5.2) | +2 |
 | `DEFAITE` | Game over | Fin de combat perdu | 0 |
 | `FUITE_EN_COMBAT` | Le jeu a été fermé pendant un combat | Session restée ouverte en combat (voir 5.3) | +2 |
@@ -163,6 +163,10 @@ Lumi a vu des événements qui ont disparu.
 
 **Pourquoi un compteur et pas la date ?** Le joueur peut changer l'heure de son ordinateur.
 Le compteur, lui, ne dépend que de ce qui s'est passé en jeu.
+
+Si la sauvegarde appartient à un **ancien numéro** de Voyageur, les progressions ne sont pas comparables :
+le Carnet enregistre un souvenir `RETOUR_ANCIEN_VOYAGEUR` à la place, et le numéro actuel ne change pas
+(il ne redescend jamais).
 
 ### 5.2 Le choix refait
 
