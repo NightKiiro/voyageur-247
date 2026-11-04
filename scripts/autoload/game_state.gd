@@ -74,8 +74,9 @@ func terminer_combat(epargne: bool, boss_id: String = "") -> void:
 		pacifisme["epargnes"] += 1
 	else:
 		pacifisme["vaincus"] += 1
-		if boss_id != "":
-			(pacifisme["boss_vaincus"] as Array).append(boss_id)
+		var boss_vaincus: Array = pacifisme["boss_vaincus"]
+		if boss_id != "" and not boss_vaincus.has(boss_id):
+			boss_vaincus.append(boss_id)
 	Carnet.fin_combat()
 	avancer_progression()
 
