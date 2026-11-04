@@ -185,6 +185,7 @@ Toutes les touches sont configurables dans les options.
 | **Menu pause** | Inventaire, statut, options, quitter |
 | **Menu de sauvegarde** | 3 emplacements (zone, temps, numéro du Voyageur) |
 | **Écran d'embranchements** | Après chaque fin (voir STRUCTURE.md, section 7) |
+| **Fenêtre** | Le titre de la fenêtre affiche le numéro actuel du Voyageur (« Voyageur n°249 ») |
 
 ## 9. Direction artistique
 

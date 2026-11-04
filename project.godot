@@ -16,6 +16,10 @@ config/custom_user_dir_name="voyageur-247"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Carnet="*uid://b7o1m1gldtr6l"
+
 [display]
 
 window/size/viewport_width=320

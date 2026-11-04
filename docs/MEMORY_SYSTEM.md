@@ -84,7 +84,8 @@ Les fichiers sont en **JSON** : lisible, facile à déboguer, et natif dans Godo
     "en_combat": false,
     "combat_id": ""
   },
-  "progression_max": 1834,
+  "partie_commencee": true,
+  "progression_actuelle": 1834,
   "choix_connus": {
     "prologue_numero": "demander",
     "cardon_entrainement": "encourager"
@@ -107,7 +108,8 @@ Les fichiers sont en **JSON** : lisible, facile à déboguer, et natif dans Godo
 | `voyageur_numero` | Numéro actuel du joueur, commence à 247, ne redescend jamais |
 | `manipulation` | Score de manipulation cumulé, toutes parties confondues |
 | `session` | Permet de détecter une fermeture anormale au lancement suivant |
-| `progression_max` | Plus haute valeur du compteur de progression jamais atteinte **pour le numéro actuel** |
+| `partie_commencee` | Indique si une première partie a déjà été lancée (sinon la prochaine sera celle du n°247) |
+| `progression_actuelle` | Position du joueur dans la ligne du temps **pour le numéro actuel**, mise à jour à chaque chargement |
 | `choix_connus` | Premier choix fait pour chaque décision, **pour le numéro actuel** |
 | `boss_rencontres` | Boss déjà affrontés, toutes parties confondues (réactions de Lumi) |
 | `fins_vues` | Fins atteintes, avec le numéro du Voyageur à ce moment |
@@ -145,16 +147,19 @@ Le jeu tient un **compteur de progression** : un entier qui augmente à chaque �
 (changement de scène, dialogue terminé, combat terminé, objet ramassé).
 
 - La sauvegarde stocke la valeur du compteur au moment où elle est faite
-- Le Carnet stocke `progression_max`, la valeur la plus haute jamais atteinte avec ce numéro de Voyageur
+- Le Carnet stocke `progression_actuelle`, la position du joueur dans la ligne du temps
 
 Au chargement d'une sauvegarde :
 
 ```
-si sauvegarde.progression < carnet.progression_max :
+si sauvegarde.progression < carnet.progression_actuelle :
     → le joueur remonte dans le temps : souvenir RECHARGEMENT
-sinon :
-    → simple reprise de partie (par exemple après avoir quitté proprement) : pas de souvenir
+progression_actuelle = sauvegarde.progression
 ```
+
+Charger une sauvegarde juste après l'avoir faite (par exemple après avoir quitté proprement) ne crée aucun souvenir.
+En revanche, jouer sans sauvegarder puis recharger la dernière halte est bien un retour en arrière :
+Lumi a vu des événements qui ont disparu.
 
 **Pourquoi un compteur et pas la date ?** Le joueur peut changer l'heure de son ordinateur.
 Le compteur, lui, ne dépend que de ce qui s'est passé en jeu.
@@ -208,12 +213,12 @@ quand le joueur lance une nouvelle partie :
         si une fin a été vue avec le numéro actuel → manipulation +1
         sinon → manipulation +3
         numéro += 1
-    progression_max = 0
+    progression_actuelle = 0
     choix_connus = {}
     souvenir NOUVELLE_PARTIE
 ```
 
-`progression_max` et `choix_connus` sont remis à zéro parce qu'ils concernent **un Voyageur précis**.
+`progression_actuelle` et `choix_connus` sont remis à zéro parce qu'ils concernent **un Voyageur précis**.
 Le numéro, la manipulation, les boss rencontrés et les fins vues, eux, restent.
 
 ## 6. Robustesse
@@ -244,7 +249,7 @@ mérite de tromper Lumi.
 
 ### 6.3 Carnet supprimé
 
-Si le Carnet est absent mais que des sauvegardes existent avec un `voyageur_numero` supérieur à 247,
+Si le Carnet est absent mais que des sauvegardes existent (quel que soit leur numéro),
 le joueur a essayé d'effacer la mémoire de Lumi.
 
 Le jeu recrée un Carnet en reprenant le **numéro le plus élevé trouvé dans les sauvegardes**
