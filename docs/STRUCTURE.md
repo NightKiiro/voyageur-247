@@ -54,6 +54,22 @@ Chaque combat important peut se terminer de deux façons : **épargner** (en par
 | **Mixte** | Ni pacifiste ni violent |
 | **Violent** | Tous les boss vaincus par la force **et** au moins 70 % des combats vaincus par la force |
 
+#### Tendance pendant la partie
+
+L'état ci-dessus ne sert qu'à déterminer la fin. Pendant la partie, Lumi réagit à la **tendance** :
+la part des combats terminés par la force, recalculée après chaque combat.
+
+| Palier | Condition *(provisoire)* | Effet sur Lumi |
+|---|---|---|
+| Aucune | Moins de 3 combats, ou moins de 50 % vaincus | Comportement normal |
+| Marquée | 50 % à 79 % vaincus | Moins de blagues, remarques inquiètes après les combats |
+| Forte | 80 % et plus | Presque muette, sa lumière faiblit |
+
+Le palier peut redescendre : un joueur qui recommence à épargner voit Lumi revenir peu à peu.
+
+Un joueur en palier Forte qui épargne finalement un boss principal sort de la route Violente au dernier moment.
+Lumi réagit à ce revirement.
+
 ### 2.2 Manipulation
 
 Score qui augmente à chaque action méta. Il vit dans le Carnet : **recommencer une partie ne le remet pas à zéro**.

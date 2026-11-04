@@ -110,7 +110,7 @@ puis retour au menu de chargement.
 
 - Commente le combat (blagues au début, inquiétude plus tard)
 - Si le boss a déjà été rencontré dans une autre partie, ses indices deviennent précis : « Il aime qu'on lui parle de la mousse. Je le sais, on l'a déjà fait. »
-- Si le joueur est sur la route Violente, Lumi parle de moins en moins, puis plus du tout
+- Selon la tendance à la violence (voir STRUCTURE.md, section 2.1), Lumi parle de moins en moins, puis presque plus du tout
 
 ## 6. Dialogues
 

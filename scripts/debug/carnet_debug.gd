@@ -48,6 +48,7 @@ func _ready() -> void:
 	_ajouter_bouton(boutons, "Quitter", Carnet.quitter)
 
 	Carnet.souvenir_enregistre.connect(_on_souvenir_enregistre)
+	GameState.palier_violence_change.connect(_on_palier_violence_change)
 	_rafraichir()
 
 
@@ -72,6 +73,8 @@ func _on_bouton_presse(action: Callable) -> void:
 func _on_souvenir_enregistre(type: String, donnees: Dictionary) -> void:
 	print("[Carnet] %s %s" % [type, donnees])
 
+func _on_palier_violence_change(palier: String) -> void:
+	print("[GameState] Palier de violence : %s" % palier)
 
 func _progresser() -> void:
 	for i in 10:
@@ -95,6 +98,7 @@ func _rafraichir() -> void:
 	lignes.append("En partie : %s   Temps : %d s" % [GameState.en_partie, int(GameState.temps_de_jeu)])
 	lignes.append("Progression (partie) : %d" % GameState.progression)
 	lignes.append("Pacifisme : %s (%s)" % [GameState.pacifisme, GameState.get_etat_pacifisme()])
+	lignes.append("Tendance : %d %% (palier : %s)" % [roundi(GameState.get_tendance_violence() * 100), GameState.get_palier_violence()])
 	lignes.append("Choix : %s" % GameState.choix)
 
 	lignes.append("")

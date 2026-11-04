@@ -3,11 +3,16 @@ extends Node
 ## Voir docs/STRUCTURE.md (les axes) et docs/MEMORY_SYSTEM.md (format des sauvegardes).
 
 signal etat_modifie
+signal palier_violence_change(palier: String)
 
 const LIEN_MAX := {"lumi": 10, "ortie": 5, "cardon": 5, "mirette": 5}
 ## Boss qui comptent pour la route Violente. À compléter avec les boss des actes 2 et 3.
 const BOSS_PRINCIPAUX := ["gardien_puits"]
 const SEUIL_VIOLENT := 0.7
+const SEUIL_TENDANCE_MARQUEE := 0.5
+const SEUIL_TENDANCE_FORTE := 0.8
+## Nombre de combats avant que la tendance ne compte (évite les 0 % / 100 % du premier combat).
+const MIN_COMBATS_TENDANCE := 3
 
 var en_partie := false
 var progression := 0
@@ -70,6 +75,7 @@ func faire_choix(choix_id: String, option: String) -> bool:
 # --- Combats ----------------------------------------------------------------
 
 func terminer_combat(epargne: bool, boss_id: String = "") -> void:
+	var palier_avant := get_palier_violence()
 	if epargne:
 		pacifisme["epargnes"] += 1
 	else:
@@ -80,18 +86,42 @@ func terminer_combat(epargne: bool, boss_id: String = "") -> void:
 	Carnet.fin_combat()
 	avancer_progression()
 
+	var palier_apres := get_palier_violence()
+	if palier_apres != palier_avant:
+		palier_violence_change.emit(palier_apres)
 
-## "pacifiste", "mixte" ou "violent" (voir docs/STRUCTURE.md, section 2.1).
+
+## "pacifiste", "mixte" ou "violent" : décide de la fin (voir docs/STRUCTURE.md, section 2.1).
 func get_etat_pacifisme() -> String:
-	var vaincus: int = pacifisme["vaincus"]
-	var total: int = vaincus + int(pacifisme["epargnes"])
-	if vaincus == 0:
+	if int(pacifisme["vaincus"]) == 0:
 		return "pacifiste"
 	var boss_vaincus: Array = pacifisme["boss_vaincus"]
 	var tous_les_boss := BOSS_PRINCIPAUX.all(func(boss: String) -> bool: return boss_vaincus.has(boss))
-	if tous_les_boss and float(vaincus) / total >= SEUIL_VIOLENT:
+	if tous_les_boss and get_tendance_violence() >= SEUIL_VIOLENT:
 		return "violent"
 	return "mixte"
+
+
+## Part des combats terminés par la force, de 0.0 à 1.0.
+func get_tendance_violence() -> float:
+	var vaincus: int = pacifisme["vaincus"]
+	var total: int = vaincus + int(pacifisme["epargnes"])
+	if total == 0:
+		return 0.0
+	return float(vaincus) / total
+
+
+## "aucune", "marquee" ou "forte" : fait réagir Lumi pendant la partie.
+func get_palier_violence() -> String:
+	var total: int = int(pacifisme["vaincus"]) + int(pacifisme["epargnes"])
+	if total < MIN_COMBATS_TENDANCE:
+		return "aucune"
+	var tendance := get_tendance_violence()
+	if tendance >= SEUIL_TENDANCE_FORTE:
+		return "forte"
+	if tendance >= SEUIL_TENDANCE_MARQUEE:
+		return "marquee"
+	return "aucune"
 
 
 # --- Liens, vérité, inventaire ----------------------------------------------
