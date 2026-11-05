@@ -55,6 +55,9 @@ Le joueur ne peut sauvegarder qu'aux **haltes** : de petites pierres moussues o�
 - Lumi dit une courte phrase à chaque halte, qui évolue selon le Carnet
 - **Pourquoi pas une sauvegarde libre** : les haltes donnent du poids à chaque sauvegarde et à chaque rechargement.
   Revenir à la dernière halte est un acte conscient, que Lumi peut commenter
+- Le menu d'une halte propose : se reposer (sauvegarder), revenir au dernier repos (recharger), repartir
+- **Prototype** : la halte utilise toujours l'emplacement 1, et la salle de test continue cette sauvegarde au lancement.
+  Le choix parmi les 3 emplacements viendra avec l'écran titre
 
 ### Emplacements
 
@@ -174,6 +177,17 @@ Une condition peut combiner plusieurs clés : elles doivent toutes être vraies.
 
 Chaque choix passe par `GameState.faire_choix()`, donc par le Carnet, ce qui permet de détecter les choix refaits.
 Les effets possibles sont pour l'instant les liens (`lien_lumi`, `lien_ortie`, `lien_cardon`, `lien_mirette`).
+
+Un choix **sans `choix_id`** est un simple menu (par exemple celui d'une halte) : il n'est pas enregistré
+dans la partie ni dans le Carnet, et ne peut donc pas être « refait ».
+
+Effets possibles :
+
+| Effet | Exemple | Action |
+|---|---|---|
+| `lien_<perso>` | `"lien_lumi": 1` | Modifie le lien avec ce personnage |
+| `sauvegarder` | `"sauvegarder": true` | Sauvegarde la partie (emplacement de la halte) |
+| `charger` | `"charger": true` | Recharge la dernière sauvegarde de la halte |
 
 ### Affichage
 

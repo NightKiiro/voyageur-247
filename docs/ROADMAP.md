@@ -32,7 +32,7 @@ Objectif : se déplacer et parler, avec des carrés de couleur à la place des g
 - [x] Une scène de test avec collisions
 - [x] Système d'interaction
 - [x] Système de dialogues (JSON, conditions, choix)
-- [ ] Une halte fonctionnelle
+- [x] Une halte fonctionnelle
 - [ ] Transitions entre scènes
 - [ ] Écran de débogage F3 par-dessus le jeu (contenu du Carnet en direct)
 

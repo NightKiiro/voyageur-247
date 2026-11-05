@@ -41,6 +41,7 @@ func _physics_process(_delta: float) -> void:
 		direction_regard = direction.normalized()
 		_placer_detecteur()
 	move_and_slide()
+	GameState.position_joueur = global_position
 
 
 func _unhandled_input(event: InputEvent) -> void:

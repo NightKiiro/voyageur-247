@@ -1,6 +1,7 @@
 extends Node2D
 ## Salle de test du prototype d'exploration (phase 2). Sera remplacée par de vraies cartes.
 
+const NOM_SCENE := "salle_test"
 const TAILLE := Vector2(320, 180)
 const EPAISSEUR_MUR := 8.0
 const COULEUR_SOL := Color("#3b4a3f")
@@ -8,11 +9,16 @@ const COULEUR_MUR := Color("#8a9a7b")
 const COULEUR_PANNEAU := Color("#9c6b3f")
 const COULEUR_PIERRE := Color("#6f7a86")
 const COULEUR_LUMI := Color("#f2d16b")
+const COULEUR_HALTE := Color("#7fa36b")
 const POSITION_DEPART := Vector2(60, 60)
 ## Marge autour d'un objet dans laquelle on peut interagir avec lui.
 const MARGE_INTERACTION := 4.0
+## Emplacement continué au lancement, en attendant l'écran titre.
+const EMPLACEMENT_PROTOTYPE := 1
 
 const SCENE_VOYAGEUR := preload("res://scenes/personnages/voyageur.tscn")
+
+var _voyageur: Voyageur
 
 
 func _ready() -> void:
@@ -32,10 +38,32 @@ func _ready() -> void:
 	_creer_objet(Rect2(250, 40, 12, 10), COULEUR_PANNEAU, "panneau_brindille")
 	_creer_objet(Rect2(230, 130, 14, 10), COULEUR_PIERRE, "pierre_mousse")
 	_creer_objet(Rect2(104, 36, 8, 8), COULEUR_LUMI, "lumi_salut")
+	_creer_objet(Rect2(110, 142, 12, 8), COULEUR_HALTE, "halte")
 
-	var voyageur := SCENE_VOYAGEUR.instantiate()
-	voyageur.position = POSITION_DEPART
-	add_child(voyageur)
+	_voyageur = SCENE_VOYAGEUR.instantiate() as Voyageur
+	_voyageur.position = POSITION_DEPART
+	add_child(_voyageur)
+
+	SaveManager.partie_chargee.connect(_on_partie_chargee)
+	_demarrer_partie()
+
+
+## Continue la partie sauvegardée s'il y en a une, sinon en commence une nouvelle.
+func _demarrer_partie() -> void:
+	if SaveManager.emplacement_existe(EMPLACEMENT_PROTOTYPE):
+		SaveManager.charger(EMPLACEMENT_PROTOTYPE)
+	else:
+		SaveManager.nouvelle_partie()
+		GameState.scene = NOM_SCENE
+		GameState.position_joueur = POSITION_DEPART
+
+
+## Après un chargement, le Voyageur réapparaît là où la partie a été sauvegardée.
+func _on_partie_chargee(_emplacement: int) -> void:
+	var position_sauvegardee := GameState.position_joueur
+	if position_sauvegardee == Vector2.ZERO:
+		position_sauvegardee = POSITION_DEPART
+	_voyageur.position = position_sauvegardee
 
 
 func _creer_rectangle(zone: Rect2, couleur: Color) -> void:
