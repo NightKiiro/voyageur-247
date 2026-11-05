@@ -24,6 +24,7 @@ GameState="*uid://c6eqwn55ej6sx"
 SaveManager="*uid://d5865ol234ta"
 Dialogues="*uid://m4g78j3d2r8y"
 BoiteDialogue="*uid://sshvusoagwl3"
+DebugCarnet="*uid://bxhufb80nh244"
 
 [display]
 
