@@ -10,6 +10,8 @@ const CHEMIN_POLICE := "res://assets/polices/PixelOperator8.ttf"
 const TAILLE_POLICE := 8
 const COULEUR_FOND := Color("#1d2420")
 const COULEUR_BORDURE := Color("#d9c7a3")
+## Emplacement utilisé par les haltes, en attendant le menu des 3 emplacements.
+const EMPLACEMENT_HALTE := 1
 
 const NOMS := {
 	"lumi": "Lumi",
@@ -188,8 +190,13 @@ func _valider_choix() -> void:
 	_en_choix = false
 	_cadre_choix.visible = false
 
-	var refait := GameState.faire_choix(choix["choix_id"], option["id"])
-	Dialogues.choix_refait_recent = choix["choix_id"] if refait else ""
+	# Un choix sans choix_id est un simple menu (par exemple une halte) : le Carnet l'ignore.
+	var choix_id: String = choix.get("choix_id", "")
+	Dialogues.choix_refait_recent = ""
+	if choix_id != "":
+		var refait: bool = GameState.faire_choix(choix_id, option["id"])
+		if refait:
+			Dialogues.choix_refait_recent = choix_id
 	_appliquer_effets(option.get("effets", {}))
 
 	if option.has("suite"):
@@ -198,14 +205,18 @@ func _valider_choix() -> void:
 		_terminer()
 
 
-## Effets d'une option, par exemple {"lien_lumi": 1}.
+## Effets d'une option, par exemple {"lien_lumi": 1} ou {"sauvegarder": true}.
 func _appliquer_effets(effets: Dictionary) -> void:
 	for cle: String in effets:
 		if cle.begins_with("lien_"):
 			GameState.modifier_lien(cle.trim_prefix("lien_"), int(effets[cle]))
+		elif cle == "sauvegarder":
+			SaveManager.sauvegarder(EMPLACEMENT_HALTE)
+		elif cle == "charger":
+			if not SaveManager.charger(EMPLACEMENT_HALTE):
+				push_warning("BoiteDialogue : aucune sauvegarde à charger")
 		else:
 			push_warning("BoiteDialogue : effet inconnu '%s'" % cle)
-
 
 # --- Interface --------------------------------------------------------------
 

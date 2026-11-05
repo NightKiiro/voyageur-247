@@ -82,5 +82,44 @@
 				]
 			}
 		]
+	},
+	"halte": {
+		"variantes": [
+			{
+				"condition": { "souvenir_min": { "type": "RECHARGEMENT", "nombre": 3 } },
+				"lignes": [
+					{ "perso": "lumi", "humeur": "inquiete", "texte": "Tu reviens toujours ici, hein..." }
+				],
+				"suite": "halte_menu"
+			},
+			{
+				"lignes": [
+					{ "perso": "lumi", "humeur": "joyeuse", "texte": "Une petite pause ? Bonne idée !" }
+				],
+				"suite": "halte_menu"
+			}
+		]
+	},
+	"halte_menu": {
+		"variantes": [
+			{
+				"choix": {
+					"options": [
+						{ "id": "sauvegarder", "texte": "Se reposer", "effets": { "sauvegarder": true }, "suite": "halte_sauvegarde" },
+						{ "id": "charger", "texte": "Revenir au dernier repos", "effets": { "charger": true } },
+						{ "id": "partir", "texte": "Repartir" }
+					]
+				}
+			}
+		]
+	},
+	"halte_sauvegarde": {
+		"variantes": [
+			{
+				"lignes": [
+					{ "perso": "lumi", "humeur": "joyeuse", "texte": "C'est noté. Je m'en souviendrai." }
+				]
+			}
+		]
 	}
 }
