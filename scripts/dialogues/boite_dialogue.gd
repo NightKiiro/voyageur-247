@@ -6,8 +6,6 @@ signal dialogue_termine
 
 ## Caractères affichés par seconde.
 const VITESSE_TEXTE := 40.0
-const CHEMIN_POLICE := "res://assets/polices/PixelOperator8.ttf"
-const TAILLE_POLICE := 8
 const COULEUR_FOND := Color("#1d2420")
 const COULEUR_BORDURE := Color("#d9c7a3")
 ## Emplacement utilisé par les haltes, en attendant le menu des 3 emplacements.
@@ -218,13 +216,14 @@ func _appliquer_effets(effets: Dictionary) -> void:
 		else:
 			push_warning("BoiteDialogue : effet inconnu '%s'" % cle)
 
+
 # --- Interface --------------------------------------------------------------
 
 func _construire_interface() -> void:
 	var racine := Control.new()
 	racine.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	racine.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	racine.theme = _creer_theme()
+	racine.theme = ThemePixel.creer()
 	add_child(racine)
 
 	_cadre = Panel.new()
@@ -259,21 +258,6 @@ func _construire_interface() -> void:
 	_liste_choix = VBoxContainer.new()
 	_liste_choix.add_theme_constant_override("separation", 0)
 	_cadre_choix.add_child(_liste_choix)
-
-
-func _creer_theme() -> Theme:
-	var theme := Theme.new()
-	theme.default_font_size = TAILLE_POLICE
-	if ResourceLoader.exists(CHEMIN_POLICE):
-		var police: FontFile = load(CHEMIN_POLICE)
-		# Rendu net pour une police pixel : pas de lissage.
-		police.antialiasing = TextServer.FONT_ANTIALIASING_NONE
-		police.hinting = TextServer.HINTING_NONE
-		police.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
-		theme.default_font = police
-	else:
-		push_warning("BoiteDialogue : police introuvable (%s), police par défaut utilisée" % CHEMIN_POLICE)
-	return theme
 
 
 func _creer_style() -> StyleBoxFlat:

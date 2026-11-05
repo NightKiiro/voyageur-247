@@ -34,7 +34,7 @@ Objectif : se déplacer et parler, avec des carrés de couleur à la place des g
 - [x] Système de dialogues (JSON, conditions, choix)
 - [x] Une halte fonctionnelle
 - [ ] Transitions entre scènes
-- [ ] Écran de débogage F3 par-dessus le jeu (contenu du Carnet en direct)
+- [x] Écran de débogage F3 par-dessus le jeu (contenu du Carnet en direct)
 
 **Terminé quand :** on peut parler à Lumi, faire un choix, sauvegarder à une halte, recharger,
 refaire le choix, et Lumi le remarque.
