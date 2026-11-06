@@ -1,0 +1,33 @@
+{
+	"cardon": {
+		"nom": "Cardon",
+		"pv": 20,
+		"attaque": 3,
+		"boss": false,
+		"couleur": "#b0b8c8",
+		"intro": "Cardon brandit son épée en bois. « En garde, Voyageur ! »",
+		"indice_lumi": "Psst... Il regarde tout le temps son armure. Je parie qu'il aimerait qu'on la remarque.",
+		"options_parler": [
+			{
+				"id": "complimenter",
+				"texte": "Complimenter son armure",
+				"apaisement": 40,
+				"reponse": "« Elle... elle te plaît vraiment ? C'est ma grand-mère qui l'a cousue. »"
+			},
+			{
+				"id": "demander",
+				"texte": "Lui demander pourquoi il se bat",
+				"apaisement": 30,
+				"reponse": "« Pour... pour qu'on arrête de rire de moi. »"
+			},
+			{
+				"id": "provoquer",
+				"texte": "Se moquer de lui",
+				"apaisement": -20,
+				"reponse": "« Tu vas voir ce que tu vas voir ! »"
+			}
+		],
+		"texte_epargne": "Cardon range son épée. « On dira que c'est un match nul, d'accord ? »",
+		"texte_vaincu": "Cardon tombe à genoux. « J'ai... j'ai juste glissé. »"
+	}
+}

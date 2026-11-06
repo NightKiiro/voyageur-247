@@ -63,6 +63,10 @@ func _verifier(cle: String, valeur: Variant) -> bool:
 			return GameState.get_palier_violence() == valeur
 		"boss_rencontre":
 			return Carnet.a_rencontre_boss(valeur)
+		"combat_fait":
+			return GameState.combats.has(valeur)
+		"combat_issue":
+			return GameState.combats.get(valeur["ennemi"], "") == valeur["issue"]
 	push_error("Dialogues : condition inconnue '%s'" % cle)
 	return false
 
