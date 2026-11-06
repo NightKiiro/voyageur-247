@@ -27,7 +27,7 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if not peut_bouger:
+	if not peut_bouger or Monde.est_en_transition():
 		velocity = Vector2.ZERO
 		return
 

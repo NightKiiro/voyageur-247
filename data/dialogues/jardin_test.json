@@ -1,0 +1,11 @@
+{
+	"panneau_jardin": {
+		"variantes": [
+			{
+				"lignes": [
+					{ "perso": "narrateur", "texte": "« Jardin d'essai. Revenez quand il y aura des fleurs. »" }
+				]
+			}
+		]
+	}
+}
