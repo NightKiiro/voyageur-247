@@ -5,6 +5,8 @@
 		"attaque": 3,
 		"boss": false,
 		"couleur": "#b0b8c8",
+		"motifs": ["pluie", "balayage", "rafale"],
+		"duree_esquive": 4.0,
 		"intro": "Cardon brandit son épée en bois. « En garde, Voyageur ! »",
 		"indice_lumi": "Psst... Il regarde tout le temps son armure. Je parie qu'il aimerait qu'on la remarque.",
 		"options_parler": [

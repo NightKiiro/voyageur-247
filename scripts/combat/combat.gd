@@ -1,6 +1,6 @@
 extends CanvasLayer
 ## Combat tour par tour (voir docs/GDD.md, section 5). Autoload : Combat.
-## Prototype : la phase d'esquive viendra plus tard ; en attendant, l'ennemi inflige des dégâts fixes.
+## Au tour de l'ennemi, le joueur esquive ses attaques avec l'Étincelle (voir esquive.gd).
 
 ## Émis à la fin du combat avec "epargne", "vaincu" ou "defaite".
 signal combat_termine(issue: String)
@@ -11,6 +11,7 @@ const DEGATS_FRAPPE := 5
 ## Frapper un ennemi presque apaisé fait chuter son apaisement (voir GDD, section 5).
 const CHUTE_APAISEMENT_FRAPPE := 30
 const SOIN_POTION := 10
+const DUREE_ESQUIVE_DEFAUT := 4.0
 ## Emplacement rechargé après une défaite, en attendant l'écran de chargement.
 const EMPLACEMENT_DEFAITE := 1
 
@@ -23,7 +24,7 @@ const COULEUR_JAUGE_VIDE := Color("#2a2f31")
 const COULEUR_PV := Color("#c0504d")
 const COULEUR_APAISEMENT := Color("#6fb3d2")
 
-enum Etat { INACTIF, MESSAGE, MENU, SOUS_MENU }
+enum Etat { INACTIF, MESSAGE, MENU, SOUS_MENU, ESQUIVE }
 
 var _ennemis: Dictionary = {}
 var _etat := Etat.INACTIF
@@ -43,8 +44,10 @@ var _nom: Label
 var _jauge_pv: ColorRect
 var _jauge_apaisement: ColorRect
 var _silhouette: ColorRect
+var _cadre: Panel
 var _texte: Label
 var _sous_menu: VBoxContainer
+var _esquive: Esquive
 var _pv_joueur: Label
 var _menu: HBoxContainer
 
@@ -87,7 +90,8 @@ func lancer(ennemi_id: String) -> void:
 	_afficher_messages([_ennemi["intro"]], _ouvrir_menu)
 
 
-## _input : le combat consomme les touches avant tout le reste (sauf l'écran F3).
+## _input : le combat consomme les touches avant le reste. Pendant l'esquive,
+## les touches ne sont pas consommées : l'Étincelle lit l'état du clavier, et F3 reste disponible.
 func _input(event: InputEvent) -> void:
 	if _etat == Etat.INACTIF:
 		return
@@ -118,6 +122,8 @@ func _input(event: InputEvent) -> void:
 				_ouvrir_menu()
 			else:
 				gere = false
+		Etat.ESQUIVE:
+			gere = false
 	if gere:
 		get_viewport().set_input_as_handled()
 
@@ -129,6 +135,7 @@ func _afficher_messages(messages: Array[String], apres: Callable) -> void:
 	_messages = messages.duplicate()
 	_apres_messages = apres
 	_etat = Etat.MESSAGE
+	_cadre.visible = true
 	_sous_menu.visible = false
 	_texte.visible = true
 	_mettre_a_jour_menu()
@@ -146,6 +153,7 @@ func _message_suivant() -> void:
 
 func _ouvrir_menu() -> void:
 	_etat = Etat.MENU
+	_cadre.visible = true
 	_sous_menu.visible = false
 	_texte.visible = true
 	_texte.text = "Que fais-tu ?"
@@ -242,20 +250,31 @@ func _valider_option() -> void:
 	_afficher_messages(messages, _tour_ennemi)
 
 
-# --- Tour de l'ennemi et fin ------------------------------------------------
+# --- Tour de l'ennemi : l'esquive -------------------------------------------
 
-## Prototype : dégâts fixes, en attendant la phase d'esquive.
 func _tour_ennemi() -> void:
-	var degats := int(_ennemi["attaque"])
+	var motifs: Array = _ennemi.get("motifs", ["pluie"])
+	var motif: String = motifs.pick_random()
+	_etat = Etat.ESQUIVE
+	_cadre.visible = false
+	_mettre_a_jour_menu()
+	_esquive.demarrer(motif, int(_ennemi["attaque"]), float(_ennemi.get("duree_esquive", DUREE_ESQUIVE_DEFAUT)))
+
+
+func _on_etincelle_touchee(degats: int) -> void:
 	GameState.pv = maxi(0, GameState.pv - degats)
 	_mettre_a_jour_pv_joueur()
-	var messages: Array[String] = ["%s attaque ! (-%d PV)" % [_ennemi["nom"], degats]]
 	if GameState.pv == 0:
-		messages.append("Tu t'effondres...")
+		_esquive.arreter()
+		var messages: Array[String] = ["Tu t'effondres..."]
 		_afficher_messages(messages, _defaite)
-	else:
-		_afficher_messages(messages, _ouvrir_menu)
 
+
+func _on_esquive_terminee() -> void:
+	_ouvrir_menu()
+
+
+# --- Fin du combat ----------------------------------------------------------
 
 func _terminer(issue: String) -> void:
 	GameState.combats[_ennemi_id] = issue
@@ -274,6 +293,7 @@ func _defaite() -> void:
 
 func _fermer(issue: String) -> void:
 	_etat = Etat.INACTIF
+	_esquive.arreter()
 	_racine.visible = false
 	_figer_voyageur(false)
 	combat_termine.emit(issue)
@@ -355,22 +375,29 @@ func _construire_interface() -> void:
 	style.border_color = COULEUR_CADRE
 	style.set_border_width_all(1)
 
-	var cadre := Panel.new()
-	cadre.position = Vector2(8, 96)
-	cadre.size = Vector2(304, 46)
-	cadre.add_theme_stylebox_override("panel", style)
-	_racine.add_child(cadre)
+	_cadre = Panel.new()
+	_cadre.position = Vector2(8, 96)
+	_cadre.size = Vector2(304, 46)
+	_cadre.add_theme_stylebox_override("panel", style)
+	_racine.add_child(_cadre)
 
 	_texte = Label.new()
 	_texte.position = Vector2(6, 4)
 	_texte.size = Vector2(292, 38)
 	_texte.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	cadre.add_child(_texte)
+	_cadre.add_child(_texte)
 
 	_sous_menu = VBoxContainer.new()
 	_sous_menu.position = Vector2(6, 3)
 	_sous_menu.add_theme_constant_override("separation", 0)
-	cadre.add_child(_sous_menu)
+	_cadre.add_child(_sous_menu)
+
+	# Le cadre d'esquive prend la place du cadre de texte pendant le tour de l'ennemi.
+	_esquive = Esquive.new()
+	_esquive.position = Vector2(110, 84)
+	_esquive.touchee.connect(_on_etincelle_touchee)
+	_esquive.terminee.connect(_on_esquive_terminee)
+	_racine.add_child(_esquive)
 
 	_pv_joueur = _creer_label(Vector2(8, 148))
 
