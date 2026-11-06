@@ -41,10 +41,10 @@ refaire le choix, et Lumi le remarque.
 
 ## Phase 3 — Prototype de combat
 
-- [ ] Phase de choix (Frapper, Parler, Objet, Lumi)
+- [x] Phase de choix (Frapper, Parler, Objet, Lumi)
 - [ ] Phase d'esquive avec l'Étincelle et 3 motifs d'attaque
-- [ ] Jauges de PV et d'apaisement, option Épargner
-- [ ] Défaite et retour au chargement
+- [x] Jauges de PV et d'apaisement, option Épargner
+- [x] Défaite et retour au chargement
 - [ ] Combat contre Cardon (version grise)
 
 **Terminé quand :** on peut gagner, épargner et perdre contre Cardon, et le Carnet enregistre tout.

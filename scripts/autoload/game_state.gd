@@ -13,6 +13,8 @@ const SEUIL_TENDANCE_MARQUEE := 0.5
 const SEUIL_TENDANCE_FORTE := 0.8
 ## Nombre de combats avant que la tendance ne compte (évite les 0 % / 100 % du premier combat).
 const MIN_COMBATS_TENDANCE := 3
+## Points de vie en début de partie (ils augmenteront à chaque Lanterne, voir GDD section 5).
+const PV_MAX_DEPART := 20
 
 var en_partie := false
 var progression := 0
@@ -21,7 +23,11 @@ var scene := ""
 var position_joueur := Vector2.ZERO
 var acte := 0
 var lanternes := 0
+var pv := PV_MAX_DEPART
+var pv_max := PV_MAX_DEPART
 var pacifisme: Dictionary = {}
+## Issue de chaque combat de la partie, par ennemi : "epargne" ou "vaincu".
+var combats: Dictionary = {}
 var liens: Dictionary = {}
 var verite: Dictionary = {}
 var choix: Dictionary = {}
@@ -45,7 +51,10 @@ func reinitialiser() -> void:
 	position_joueur = Vector2.ZERO
 	acte = 0
 	lanternes = 0
+	pv_max = PV_MAX_DEPART
+	pv = pv_max
 	pacifisme = {"epargnes": 0, "vaincus": 0, "boss_vaincus": []}
+	combats = {}
 	liens = {"lumi": 0, "ortie": 0, "cardon": 0, "mirette": 0}
 	verite = {"indices": [], "question_phare": false, "promesse": false}
 	choix = {}
@@ -70,6 +79,18 @@ func faire_choix(choix_id: String, option: String) -> bool:
 	var refait: bool = Carnet.enregistrer_choix(choix_id, option)
 	avancer_progression()
 	return refait
+
+
+# --- Points de vie ----------------------------------------------------------
+
+func soigner(montant: int) -> void:
+	pv = mini(pv_max, pv + montant)
+	etat_modifie.emit()
+
+
+func restaurer_pv() -> void:
+	pv = pv_max
+	etat_modifie.emit()
 
 
 # --- Combats ----------------------------------------------------------------
@@ -165,7 +186,10 @@ func vers_dictionnaire() -> Dictionary:
 		"position": {"x": position_joueur.x, "y": position_joueur.y},
 		"acte": acte,
 		"lanternes": lanternes,
+		"pv": pv,
+		"pv_max": pv_max,
 		"pacifisme": pacifisme.duplicate(true),
+		"combats": combats.duplicate(),
 		"liens": liens.duplicate(true),
 		"verite": verite.duplicate(true),
 		"choix": choix.duplicate(),
@@ -181,6 +205,8 @@ func depuis_dictionnaire(donnees: Dictionary) -> void:
 	scene = str(donnees.get("scene", ""))
 	acte = int(donnees.get("acte", 0))
 	lanternes = int(donnees.get("lanternes", 0))
+	pv_max = int(donnees.get("pv_max", PV_MAX_DEPART))
+	pv = int(donnees.get("pv", pv_max))
 
 	var position: Dictionary = donnees.get("position", {})
 	position_joueur = Vector2(float(position.get("x", 0)), float(position.get("y", 0)))
@@ -190,6 +216,7 @@ func depuis_dictionnaire(donnees: Dictionary) -> void:
 	pacifisme["epargnes"] = int(p.get("epargnes", 0))
 	pacifisme["vaincus"] = int(p.get("vaincus", 0))
 	pacifisme["boss_vaincus"] = (p.get("boss_vaincus", []) as Array).duplicate()
+	combats = (donnees.get("combats", {}) as Dictionary).duplicate()
 
 	var l: Dictionary = donnees.get("liens", {})
 	for personnage: String in liens:

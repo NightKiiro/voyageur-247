@@ -123,6 +123,37 @@ puis retour au menu de chargement.
 - Si le boss a déjà été rencontré dans une autre partie, ses indices deviennent précis : « Il aime qu'on lui parle de la mousse. Je le sais, on l'a déjà fait. »
 - Selon la tendance à la violence (voir STRUCTURE.md, section 2.1), Lumi parle de moins en moins, puis presque plus du tout
 
+### Données des ennemis
+
+Les ennemis sont décrits dans `data/ennemis/ennemis.json` :
+
+```json
+"cardon": {
+  "nom": "Cardon",
+  "pv": 20,
+  "attaque": 3,
+  "boss": false,
+  "couleur": "#b0b8c8",
+  "intro": "Cardon brandit son épée en bois. « En garde, Voyageur ! »",
+  "indice_lumi": "Il regarde tout le temps son armure...",
+  "options_parler": [
+    { "id": "complimenter", "texte": "Complimenter son armure", "apaisement": 40, "reponse": "« Elle te plaît vraiment ? »" }
+  ],
+  "texte_epargne": "Cardon range son épée.",
+  "texte_vaincu": "Cardon tombe à genoux."
+}
+```
+
+Un combat se lance depuis un dialogue, avec l'effet `"combat": "<ennemi>"`. Son issue (« epargne » ou « vaincu »)
+est enregistrée dans la partie, ce qui permet aux personnages d'y réagir.
+
+### État du prototype
+
+- Phase de choix, jauges, Épargner, victoire et défaite : faits
+- Phase d'esquive : pas encore, l'ennemi inflige des dégâts fixes à chaque tour
+- Frapper : dégâts fixes, la jauge de timing viendra avec les finitions du combat
+- Défaite : recharge l'emplacement 1, en attendant l'écran de chargement
+
 ## 6. Dialogues
 
 ### Format
@@ -169,6 +200,8 @@ Une condition peut combiner plusieurs clés : elles doivent toutes être vraies.
 | `lien_min` | `{ "perso": "lumi", "valeur": 5 }` | Le lien avec ce personnage est au moins celui-ci |
 | `palier_violence` | `"forte"` | Le palier de violence est celui-ci |
 | `boss_rencontre` | `"gardien_puits"` | Ce boss a déjà été rencontré, toutes parties confondues |
+| `combat_fait` | `"cardon"` | Ce combat a été terminé (épargné ou vaincu) dans la partie en cours |
+| `combat_issue` | `{ "ennemi": "cardon", "issue": "epargne" }` | Ce combat s'est terminé de cette façon dans la partie en cours |
 
 ### Choix
 
@@ -193,8 +226,9 @@ Effets possibles :
 | Effet | Exemple | Action |
 |---|---|---|
 | `lien_<perso>` | `"lien_lumi": 1` | Modifie le lien avec ce personnage |
-| `sauvegarder` | `"sauvegarder": true` | Sauvegarde la partie (emplacement de la halte) |
+| `sauvegarder` | `"sauvegarder": true` | Restaure les PV et sauvegarde la partie (emplacement de la halte) |
 | `charger` | `"charger": true` | Recharge la dernière sauvegarde de la halte |
+| `combat` | `"combat": "cardon"` | Lance un combat contre cet ennemi, une fois la boîte de dialogue fermée |
 
 ### Affichage
 

@@ -203,16 +203,21 @@ func _valider_choix() -> void:
 		_terminer()
 
 
-## Effets d'une option, par exemple {"lien_lumi": 1} ou {"sauvegarder": true}.
+## Effets d'une option, par exemple {"lien_lumi": 1}, {"sauvegarder": true} ou {"combat": "cardon"}.
 func _appliquer_effets(effets: Dictionary) -> void:
 	for cle: String in effets:
 		if cle.begins_with("lien_"):
 			GameState.modifier_lien(cle.trim_prefix("lien_"), int(effets[cle]))
 		elif cle == "sauvegarder":
+			# Se reposer à une halte restaure les PV (voir GDD, section 4).
+			GameState.restaurer_pv()
 			SaveManager.sauvegarder(EMPLACEMENT_HALTE)
 		elif cle == "charger":
 			if not SaveManager.charger(EMPLACEMENT_HALTE):
 				push_warning("BoiteDialogue : aucune sauvegarde à charger")
+		elif cle == "combat":
+			# Différé : le combat commence une fois la boîte de dialogue fermée.
+			Combat.lancer.call_deferred(str(effets[cle]))
 		else:
 			push_warning("BoiteDialogue : effet inconnu '%s'" % cle)
 

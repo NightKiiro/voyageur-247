@@ -55,6 +55,7 @@ func _rafraichir() -> void:
 	lignes.append("Partie %s   %d s   %s" % [
 		"en cours" if GameState.en_partie else "aucune", int(GameState.temps_de_jeu), GameState.scene])
 	lignes.append("Position %d, %d" % [int(GameState.position_joueur.x), int(GameState.position_joueur.y)])
+	lignes.append("PV %d/%d   combats %s" % [GameState.pv, GameState.pv_max, GameState.combats])
 	lignes.append("Pacifisme %d/%d (%s)   violence %d%% (%s)" % [
 		int(GameState.pacifisme["epargnes"]), int(GameState.pacifisme["vaincus"]),
 		GameState.get_etat_pacifisme(), roundi(GameState.get_tendance_violence() * 100),

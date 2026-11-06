@@ -1,0 +1,45 @@
+{
+	"cardon_defi": {
+		"variantes": [
+			{
+				"condition": { "combat_issue": { "ennemi": "cardon", "issue": "epargne" } },
+				"lignes": [
+					{ "perso": "cardon", "texte": "Match nul, hein ? On s'entraîne encore quand tu veux !" }
+				]
+			},
+			{
+				"condition": { "combat_issue": { "ennemi": "cardon", "issue": "vaincu" } },
+				"lignes": [
+					{ "perso": "cardon", "texte": "Je... j'avais pas encore mis mon armure de combat. La vraie." }
+				]
+			},
+			{
+				"lignes": [
+					{ "perso": "cardon", "texte": "Arrête-toi, Voyageur ! Moi, Cardon, chevalier invaincu, je te défie en duel !" }
+				],
+				"suite": "cardon_defi_menu"
+			}
+		]
+	},
+	"cardon_defi_menu": {
+		"variantes": [
+			{
+				"choix": {
+					"options": [
+						{ "id": "accepter", "texte": "Accepter le duel", "effets": { "combat": "cardon" } },
+						{ "id": "refuser", "texte": "Refuser", "suite": "cardon_refus" }
+					]
+				}
+			}
+		]
+	},
+	"cardon_refus": {
+		"variantes": [
+			{
+				"lignes": [
+					{ "perso": "cardon", "texte": "Tu as peur, hein ? C'est normal. Je suis très impressionnant." }
+				]
+			}
+		]
+	}
+}

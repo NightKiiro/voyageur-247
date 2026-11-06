@@ -3,7 +3,7 @@ extends Carte
 
 const COULEUR_PIERRE := Color("#6f7a86")
 const COULEUR_LUMI := Color("#f2d16b")
-
+const COULEUR_CARDON := Color("#b0b8c8")
 
 func _construire() -> void:
 	arrivees = {
@@ -29,3 +29,4 @@ func _construire() -> void:
 	_creer_objet(Rect2(230, 130, 14, 10), COULEUR_PIERRE, "pierre_mousse")
 	_creer_objet(Rect2(104, 36, 8, 8), COULEUR_LUMI, "lumi_salut")
 	_creer_objet(Rect2(110, 142, 12, 8), COULEUR_HALTE, "halte")
+	_creer_objet(Rect2(196, 104, 10, 14), COULEUR_CARDON, "cardon_defi")
