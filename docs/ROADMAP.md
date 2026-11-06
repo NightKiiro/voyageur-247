@@ -23,7 +23,7 @@ Objectif : la mémoire du jeu fonctionne, avant même d'avoir un seul sprite.
 
 **Terminé quand :** les 13 scénarios de test de `MEMORY_SYSTEM.md` passent, avec de simples boutons à la place du jeu.
 
-## Phase 2 — Prototype d'exploration
+## Phase 2 — Prototype d'exploration ✅
 
 Objectif : se déplacer et parler, avec des carrés de couleur à la place des graphismes.
 
@@ -33,7 +33,7 @@ Objectif : se déplacer et parler, avec des carrés de couleur à la place des g
 - [x] Système d'interaction
 - [x] Système de dialogues (JSON, conditions, choix)
 - [x] Une halte fonctionnelle
-- [ ] Transitions entre scènes
+- [x] Transitions entre scènes
 - [x] Écran de débogage F3 par-dessus le jeu (contenu du Carnet en direct)
 
 **Terminé quand :** on peut parler à Lumi, faire un choix, sauvegarder à une halte, recharger,

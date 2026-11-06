@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Voyageur n°247"
-run/main_scene="uid://cd7jghjcc07op"
+run/main_scene="res://scenes/demarrage.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="voyageur-247"
 config/features=PackedStringArray("4.7", "GL Compatibility")
@@ -25,6 +25,7 @@ SaveManager="*uid://d5865ol234ta"
 Dialogues="*uid://m4g78j3d2r8y"
 BoiteDialogue="*uid://sshvusoagwl3"
 DebugCarnet="*uid://bxhufb80nh244"
+Monde="*uid://cp46x4oq30iqb"
 
 [display]
 

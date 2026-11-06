@@ -47,6 +47,13 @@ nourrit le Carnet de Lumi, qui modifie à son tour les dialogues, les indices di
   juste devant ses pieds, dans la direction où il regarde (le plus proche s'il y en a plusieurs)
 - Les éléments interactifs ont un léger scintillement (sauf les indices cachés)
 
+### Changements de carte
+
+- Le monde est découpé en cartes reliées par des sorties (un passage, une porte)
+- Emprunter une sortie déclenche un court fondu au noir, puis le Voyageur apparaît au point d'arrivée de la carte suivante
+- Changer de carte fait avancer la progression : sauvegarder, changer de carte puis recharger compte comme un retour en arrière
+- Une sauvegarde retient la carte et la position : recharger ramène toujours là où on s'était reposé
+
 ### Haltes (points de sauvegarde)
 
 Le joueur ne peut sauvegarder qu'aux **haltes** : de petites pierres moussues où Lumi se pose pour se reposer.
