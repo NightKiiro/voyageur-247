@@ -42,7 +42,7 @@ refaire le choix, et Lumi le remarque.
 ## Phase 3 — Prototype de combat
 
 - [x] Phase de choix (Frapper, Parler, Objet, Lumi)
-- [ ] Phase d'esquive avec l'Étincelle et 3 motifs d'attaque
+- [x] Phase d'esquive avec l'Étincelle et 3 motifs d'attaque
 - [x] Jauges de PV et d'apaisement, option Épargner
 - [x] Défaite et retour au chargement
 - [ ] Combat contre Cardon (version grise)

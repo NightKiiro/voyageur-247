@@ -134,6 +134,8 @@ Les ennemis sont décrits dans `data/ennemis/ennemis.json` :
   "attaque": 3,
   "boss": false,
   "couleur": "#b0b8c8",
+  "motifs": ["pluie", "balayage", "rafale"],
+  "duree_esquive": 4.0,
   "intro": "Cardon brandit son épée en bois. « En garde, Voyageur ! »",
   "indice_lumi": "Il regarde tout le temps son armure...",
   "options_parler": [
@@ -147,10 +149,24 @@ Les ennemis sont décrits dans `data/ennemis/ennemis.json` :
 Un combat se lance depuis un dialogue, avec l'effet `"combat": "<ennemi>"`. Son issue (« epargne » ou « vaincu »)
 est enregistrée dans la partie, ce qui permet aux personnages d'y réagir.
 
+### Phase d'esquive
+
+- Au tour de l'ennemi, le joueur guide l'Étincelle (4 × 4 pixels) dans un cadre de 100 × 60 pixels
+- Un motif est tiré au hasard parmi ceux de l'ennemi ; l'esquive dure `duree_esquive` secondes
+- Chaque projectile qui touche retire `attaque` PV, puis l'Étincelle clignote et reste intouchable 0,75 seconde
+- Seuls les 2 × 2 pixels du centre de l'Étincelle comptent : un projectile qui frôle le bord ne touche pas
+- Le premier projectile arrive après 0,3 seconde de répit
+
+| Motif | Description |
+|---|---|
+| `pluie` | Des projectiles tombent du haut, à des positions au hasard |
+| `balayage` | Des projectiles traversent le cadre, alternativement depuis la gauche et la droite |
+| `rafale` | Des tirs partent du haut, visés sur la position de l'Étincelle |
+
 ### État du prototype
 
 - Phase de choix, jauges, Épargner, victoire et défaite : faits
-- Phase d'esquive : pas encore, l'ennemi inflige des dégâts fixes à chaque tour
+- Phase d'esquive : faite, avec 3 motifs (pluie, balayage, rafale)
 - Frapper : dégâts fixes, la jauge de timing viendra avec les finitions du combat
 - Défaite : recharge l'emplacement 1, en attendant l'écran de chargement
 
