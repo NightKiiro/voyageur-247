@@ -74,4 +74,4 @@ Le jeu joue avec l'idée qu'il « sait » des choses sur le joueur, mais il resp
 
 ## Licence
 
-À définir.
+À définir. 
